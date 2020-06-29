@@ -106,6 +106,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)addCardsToCardPackage:(NSArray *)cardIds cardExts:(NSArray *)cardExts
                    completion:(void (^ __nullable)(BOOL success))completion;
 
+
++ (void)sendAuthMessage:(NSString *)scope
+     State:(NSString *)state
+    OpenID:(NSString *)openID
+             completion:(void (^ __nullable)(BOOL success))completion ;
+
+
 + (void)sendAuthRequestScope:(NSString *)scope
                        State:(NSString *)state
                       OpenID:(NSString *)openID

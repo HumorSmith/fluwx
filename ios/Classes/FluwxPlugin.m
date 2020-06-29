@@ -38,7 +38,9 @@ BOOL handleOpenURLByFluwx = YES;
         [self checkWeChatInstallation:call result:result];
     } else if ([@"sendAuth" isEqualToString:call.method]) {
         [_fluwxAuthHandler handleAuth:call result:result];
-    } else if ([@"authByQRCode" isEqualToString:call.method]) {
+    }else if ([@"sendAuthMsg" isEqualToString:call.method]) {
+        [_fluwxAuthHandler handleAuthMsg:call result:result];
+    }else if ([@"authByQRCode" isEqualToString:call.method]) {
         [_fluwxAuthHandler authByQRCode:call result:result];
     } else if ([@"stopAuthByQRCode" isEqualToString:call.method]) {
         [_fluwxAuthHandler stopAuthByQRCode:call result:result];

@@ -13,6 +13,9 @@
 @interface FluwxAuthHandler : NSObject <WechatAuthAPIDelegate>
 - (instancetype)initWithRegistrar:(NSObject <FlutterPluginRegistrar> *)registrar methodChannel:(FlutterMethodChannel *)flutterMethodChannel;
 
+
+- (void)handleAuthMsg:(FlutterMethodCall *)call result:(FlutterResult)result;
+
 - (void)handleAuth:(FlutterMethodCall *)call result:(FlutterResult)result;
 
 - (void)authByQRCode:(FlutterMethodCall *)call result:(FlutterResult)result;

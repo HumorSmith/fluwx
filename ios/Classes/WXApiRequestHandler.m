@@ -356,6 +356,21 @@
 }
 
 
++ (void)sendAuthMessage:(NSString *)scope
+                       State:(NSString *)state
+                      OpenID:(NSString *)openID
+                  completion:(void (^ __nullable)(BOOL success))completion {
+    SendAuthReq *req = [[SendAuthReq alloc] init];
+    req.scope = scope; // @"post_timeline,sns"
+    req.state = state;
+    req.openID = openID;
+    NSLog(@"sendAuthMessage");
+    UIViewController* viewController = [[UIViewController alloc] init];
+    [WXApi sendAuthReq:req viewController:viewController delegate:NULL completion:completion];
+}
+
+
+
 
 
 
