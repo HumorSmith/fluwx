@@ -364,8 +364,10 @@
     req.scope = scope; // @"post_timeline,sns"
     req.state = state;
     req.openID = openID;
-    NSLog(@"sendAuthMessage");
-    UIViewController* viewController = [[UIViewController alloc] init];
+    NSLog(@"sendAuthMessage111");
+    
+    UIViewController* viewController =   [[[UIApplication sharedApplication] keyWindow]rootViewController];
+//      UIApplication.shared.keyWindow?.rootViewController
     [WXApi sendAuthReq:req viewController:viewController delegate:NULL completion:completion];
 }
 
