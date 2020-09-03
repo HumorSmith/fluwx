@@ -79,10 +79,20 @@ class ShareSelectorPage extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: new OutlineButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed("shareText");
+                  openUrl("https://open.weixin.qq.com/connect/qrconnect?appid=wx5df89e3f4f09c99e&redirect_uri=https://pay.ifreedomer.com&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect");
                 },
-                child: const Text("share text")),
+                child: const Text("Open url")),
           ),
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: new OutlineButton(
+                onPressed: () {
+                  openUrl("https://open.weixin.qq.com/connect/qrconnect?appid=wx5df89e3f4f09c99e&redirect_uri=https://pay.ifreedomer.com&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect");
+                },
+                child: const Text("haha")),
+          ),
+
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: new OutlineButton(
@@ -179,6 +189,8 @@ class ShareSelectorPage extends StatelessWidget {
                 },
                 child: const Text("Open WeChat App")),
           ),
+
+
         ],
       ),
     );

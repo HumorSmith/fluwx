@@ -39,7 +39,7 @@ MethodChannel _channel = MethodChannel('com.jarvanmo/fluwx')
   ..setMethodCallHandler(_methodHandler);
 
 StreamController<BaseWeChatResponse> _weChatResponseEventHandlerController =
-    new StreamController.broadcast();
+new StreamController.broadcast();
 
 /// Response answers from WeChat after sharing, payment etc.
 Stream<BaseWeChatResponse> get weChatResponseEventHandler =>
@@ -56,18 +56,23 @@ Future<bool> openWeChatApp() async {
   return await _channel.invokeMethod("openWXApp");
 }
 
+Future<void> openUrl(String url) async {
+  return await _channel.invokeMethod("openUrl", {"url": url});
+}
+
 /// it's ok if you register multi times.
 ///[appId] is not necessary.
 ///if [doOnIOS] is true ,fluwx will register WXApi on iOS.
 ///if [doOnAndroid] is true, fluwx will register WXApi on Android.
 /// [universalLink] is required if you want to register on iOS.
-Future<bool> registerWxApi(
-    {String appId,
-    bool doOnIOS: true,
-    bool doOnAndroid: true,
-    String universalLink}) async {
+Future<bool> registerWxApi({String appId,
+  bool doOnIOS: true,
+  bool doOnAndroid: true,
+  String universalLink}) async {
   if (doOnIOS && Platform.isIOS) {
-    if (universalLink.trim().isEmpty || !universalLink.startsWith("https")) {
+    if (universalLink
+        .trim()
+        .isEmpty || !universalLink.startsWith("https")) {
       throw ArgumentError.value(universalLink,
           "your universal link is illegal, see https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/iOS.html for detail");
     }
@@ -100,13 +105,17 @@ Future<bool> shareToWeChat(WeChatShareBaseModel model) async {
 /// For more information please visit：
 /// * https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419317851&token=
 Future<bool> sendWeChatAuth({@required String scope, String state}) async {
-  assert(scope != null && scope.trim().isNotEmpty);
+  assert(scope != null && scope
+      .trim()
+      .isNotEmpty);
   return await _channel
       .invokeMethod("sendAuth", {"scope": scope, "state": state});
 }
 
 Future<bool> sendAuthMsg({@required String scope, String state}) async {
-  assert(scope != null && scope.trim().isNotEmpty);
+  assert(scope != null && scope
+      .trim()
+      .isNotEmpty);
   return await _channel
       .invokeMethod("sendAuthMsg", {"scope": scope, "state": state});
 }
@@ -114,11 +123,12 @@ Future<bool> sendAuthMsg({@required String scope, String state}) async {
 
 /// open mini-program
 /// see [WXMiniProgramType]
-Future<bool> launchWeChatMiniProgram(
-    {@required String username,
-    String path,
-    WXMiniProgramType miniProgramType = WXMiniProgramType.RELEASE}) async {
-  assert(username != null && username.trim().isNotEmpty);
+Future<bool> launchWeChatMiniProgram({@required String username,
+  String path,
+  WXMiniProgramType miniProgramType = WXMiniProgramType.RELEASE}) async {
+  assert(username != null && username
+      .trim()
+      .isNotEmpty);
   return await _channel.invokeMethod("launchMiniProgram", {
     "userName": username,
     "path": path,
@@ -129,16 +139,15 @@ Future<bool> launchWeChatMiniProgram(
 /// request payment with WeChat.
 /// Read the official document for more detail.
 /// [timeStamp] is int because [timeStamp] will be mapped to Unit32.
-Future<bool> payWithWeChat(
-    {@required String appId,
-    @required String partnerId,
-    @required String prepayId,
-    @required String packageValue,
-    @required String nonceStr,
-    @required int timeStamp,
-    @required String sign,
-    String signType,
-    String extData}) async {
+Future<bool> payWithWeChat({@required String appId,
+  @required String partnerId,
+  @required String prepayId,
+  @required String packageValue,
+  @required String nonceStr,
+  @required int timeStamp,
+  @required String sign,
+  String signType,
+  String extData}) async {
   return await _channel.invokeMethod("payWithFluwx", {
     "appId": appId,
     "partnerId": partnerId,
@@ -171,19 +180,18 @@ Future<bool> subscribeWeChatMsg({
 }
 
 /// please read official docs.
-Future<bool> autoDeDuctWeChat(
-    {@required String appId,
-    @required String mchId,
-    @required String planId,
-    @required String contractCode,
-    @required String requestSerial,
-    @required String contractDisplayAccount,
-    @required String notifyUrl,
-    @required String version,
-    @required String sign,
-    @required String timestamp,
-    String returnApp = '3',
-    int businessType = 12}) async {
+Future<bool> autoDeDuctWeChat({@required String appId,
+  @required String mchId,
+  @required String planId,
+  @required String contractCode,
+  @required String requestSerial,
+  @required String contractDisplayAccount,
+  @required String notifyUrl,
+  @required String version,
+  @required String sign,
+  @required String timestamp,
+  String returnApp = '3',
+  int businessType = 12}) async {
   return await _channel.invokeMethod("autoDeduct", {
     'appid': appId,
     'mch_id': mchId,
@@ -205,13 +213,12 @@ Future<bool> autoDeDuctWeChat(
 /// All required params must not be null or empty
 /// [schemeData] only works on iOS
 /// see * https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=215238808828h4XN&token=&lang=zh_CN
-Future<bool> authWeChatByQRCode(
-    {@required String appId,
-    @required String scope,
-    @required String nonceStr,
-    @required String timeStamp,
-    @required String signature,
-    String schemeData}) async {
+Future<bool> authWeChatByQRCode({@required String appId,
+  @required String scope,
+  @required String nonceStr,
+  @required String timeStamp,
+  @required String signature,
+  String schemeData}) async {
   assert(appId != null && appId.isNotEmpty);
   assert(scope != null && scope.isNotEmpty);
   assert(nonceStr != null && nonceStr.isNotEmpty);
@@ -235,7 +242,7 @@ Future<bool> stopWeChatAuthByQRCode() async {
 
 Future _methodHandler(MethodCall methodCall) {
   var response =
-      BaseWeChatResponse.create(methodCall.method, methodCall.arguments);
+  BaseWeChatResponse.create(methodCall.method, methodCall.arguments);
   _weChatResponseEventHandlerController.add(response);
   return Future.value();
 }

@@ -31,6 +31,9 @@ flutter:
         pluginClass: FluwxPlugin
       ios:
         pluginClass: FluwxPlugin
+      macos:
+        pluginClass: FluwxPlugin
+
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
